@@ -40,7 +40,8 @@ class MyHomePage extends StatelessWidget {
             offset: const Offset(1, 4),
           ),
           child: Container(
-            color: Colors.black87,
+            clipBehavior: Clip.antiAlias,
+            decoration: const BoxDecoration(color: Colors.black87),
             height: appBarHeight,
             width: MediaQuery.of(context).size.width,
             child: const Padding(

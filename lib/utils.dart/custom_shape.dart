@@ -14,7 +14,7 @@ class Customshape extends CustomClipper<Path> {
     var endP_1 = Offset(width / widthSlice * widthSliceOffset, height);
 
     var controlP_2 = Offset(width, height);
-    var endP_2 = Offset(width, height + (height / heightSlice));
+    var endP_2 = Offset(width, maxHeight);
 
     var path = Path();
     path.lineTo(0, (height / heightSlice) * 2);
