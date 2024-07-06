@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:learning_words/utils.dart/clip_shadow_path.dart';
 import 'package:learning_words/utils.dart/custom_shape.dart';
 
@@ -45,13 +49,27 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
       backgroundColor: Colors.white,
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
               'Learning words',
             ),
+            GestureDetector(
+              onTap: () async {
+                String data = await DefaultAssetBundle.of(context)
+                    .loadString("assets/words.json");
+                final jsonResult = jsonDecode(data);
+                log('TTest: json: $jsonResult');
+              },
+              child: Container(
+                height: 30.0,
+                width: 100.0,
+                color: Colors.amber,
+                child: const Center(child: Text('Read json')),
+              ),
+            )
           ],
         ),
       ),
