@@ -6,21 +6,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DIContainer.init();
 
-  // final db = AppDatabase();
-  // final repo = Repository(db);
-
-  // await repo.addWord(Word(
-  //     id: 0,
-  //     word: 'word',
-  //     transcription: 'transcription',
-  //     translation: 'translation'));
-
-  // List<Word> allItems = await repo.getAllWords();
-
-  // for (Word item in allItems) {
-  //   log('${item.id} : ${item.word}\n');
-  // }
-
   return runApp(const MyApp());
 }
 
