@@ -1,28 +1,25 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:learning_words/database/database.dart';
 import 'package:learning_words/home_page.dart';
-import 'package:learning_words/models/word.dart';
-import 'package:learning_words/repository/repository.dart';
+import 'package:learning_words/utils.dart/di_container.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await DIContainer.init();
 
-  final db = AppDatabase();
-  final repo = Repository(db);
+  // final db = AppDatabase();
+  // final repo = Repository(db);
 
-  await repo.addWord(Word(
-      id: 0,
-      word: 'word',
-      transcription: 'transcription',
-      translation: 'translation'));
+  // await repo.addWord(Word(
+  //     id: 0,
+  //     word: 'word',
+  //     transcription: 'transcription',
+  //     translation: 'translation'));
 
-  List<Word> allItems = await repo.getAllWords();
+  // List<Word> allItems = await repo.getAllWords();
 
-  for (Word item in allItems) {
-    log('${item.id} : ${item.word}\n');
-  }
+  // for (Word item in allItems) {
+  //   log('${item.id} : ${item.word}\n');
+  // }
 
   return runApp(const MyApp());
 }

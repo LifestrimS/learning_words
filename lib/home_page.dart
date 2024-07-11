@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:get_it/get_it.dart';
+import 'package:learning_words/models/word.dart';
+import 'package:learning_words/repository/repository.dart';
 import 'package:learning_words/utils.dart/clip_shadow_path.dart';
 import 'package:learning_words/utils.dart/custom_shape.dart';
 
@@ -57,11 +59,8 @@ class MyHomePage extends StatelessWidget {
               'Learning words',
             ),
             GestureDetector(
-              onTap: () async {
-                String data = await DefaultAssetBundle.of(context)
-                    .loadString("assets/words.json");
-                final jsonResult = jsonDecode(data);
-                log('TTest: json: $jsonResult');
+              onTap: () {
+                testSomeFun(context);
               },
               child: Container(
                 height: 30.0,
@@ -69,10 +68,59 @@ class MyHomePage extends StatelessWidget {
                 color: Colors.amber,
                 child: const Center(child: Text('Read json')),
               ),
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            GestureDetector(
+              onTap: () {
+                printDb();
+              },
+              child: Container(
+                height: 30.0,
+                width: 100.0,
+                color: Colors.green,
+                child: const Center(child: Text('Print db')),
+              ),
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            GestureDetector(
+              onTap: () async {
+                deleteAll();
+              },
+              child: Container(
+                height: 30.0,
+                width: 100.0,
+                color: Colors.red,
+                child: const Center(child: Text('Delete all in db')),
+              ),
             )
           ],
         ),
       ),
     );
+  }
+
+  void testSomeFun(BuildContext context) async {
+    String data =
+        await DefaultAssetBundle.of(context).loadString("assets/words.json");
+    final jsonResult = jsonDecode(data);
+
+    final repo = GetIt.I.get<Repository>();
+    for (dynamic jWord in jsonResult) {
+      final word = Word.fromJson(jWord);
+      repo.addWord(word);
+    }
+  }
+
+  void printDb() async {
+    final words = await GetIt.I.get<Repository>().getAllWords();
+    log('Ttest: words in db: $words');
+  }
+
+  void deleteAll() {
+    GetIt.I.get<Repository>().deleteAllWords();
   }
 }

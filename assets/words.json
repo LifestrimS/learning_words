@@ -2,46 +2,46 @@
     {
         "word": "你",
         "transcription": "ni3",
-        "translate": "ты "
+        "translation": "ты "
     },
     {
         "word": "好",
         "transcription": "hao3",
-        "translate": "хорошо "
+        "translation": "хорошо "
     },
     {
         "word": "吗",
         "transcription": "ma",
-        "translate": "вопр. частица "
+        "translation": "вопр. частица "
     },
     {
         "word": "我",
         "transcription": "wo3",
-        "translate": "я "
+        "translation": "я "
     },
     {
         "word": "很",
         "transcription": "hen3",
-        "translate": "очень "
+        "translation": "очень "
     },
     {
         "word": "谢谢",
         "transcription": "xie4xie4",
-        "translate": "спасибо "
+        "translation": "спасибо "
     },
     {
         "word": "你好",
         "transcription": "ni3hao3",
-        "translate": "здравствуйте, привет "
+        "translation": "здравствуйте, привет "
     },
     {
         "word": "叫",
         "transcription": "jiao4",
-        "translate": "звать "
+        "translation": "звать "
     },
     {
         "word": "什么",
         "transcription": "shen2ma",
-        "translate": "как, какой, что "
+        "translation": "как, какой, что "
     }
 ]
