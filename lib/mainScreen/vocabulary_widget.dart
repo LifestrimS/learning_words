@@ -7,67 +7,72 @@ class VocabularyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        border: Border.all(color: AppColors.black),
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(16.0),
-          bottomLeft: Radius.circular(16.0),
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          border: Border.all(color: AppColors.black),
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(16.0),
+            bottomLeft: Radius.circular(16.0),
+          ),
+          boxShadow: [AppColors.containerShadow],
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            height: 58.0,
-            clipBehavior: Clip.antiAlias,
-            padding:
-                const EdgeInsets.symmetric(horizontal: 13.0, vertical: 9.0),
-            decoration: const BoxDecoration(
-              color: AppColors.black,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(15.0),
-                bottomLeft: Radius.circular(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              height: 58.0,
+              clipBehavior: Clip.antiAlias,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 13.0, vertical: 9.0),
+              decoration: const BoxDecoration(
+                color: AppColors.black,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(15.0),
+                  bottomLeft: Radius.circular(16.0),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Vocabulary',
+                    style: TextStyle(
+                      color: AppColors.white,
+                      height: 0,
+                      fontSize: 32.0,
+                    ),
+                  ),
+                  RotatedBox(
+                    quarterTurns: 1,
+                    child: SvgPicture.asset(
+                      'assets/icons/triangle.svg',
+                      height: 24.0,
+                      width: 24.0,
+                      colorFilter: const ColorFilter.mode(
+                          AppColors.white, BlendMode.srcIn),
+                    ),
+                  )
+                ],
               ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text(
-                  'Vocabulary',
-                  style: TextStyle(
-                    color: AppColors.white,
-                    height: 0,
-                    fontSize: 32.0,
-                  ),
-                ),
-                RotatedBox(
-                  quarterTurns: 1,
-                  child: SvgPicture.asset(
-                    'assets/icons/triangle.svg',
-                    height: 24.0,
-                    width: 24.0,
-                    colorFilter: const ColorFilter.mode(
-                        AppColors.white, BlendMode.srcIn),
-                  ),
-                )
-              ],
+            const SizedBox(
+              height: 6.0,
             ),
-          ),
-          const SizedBox(
-            height: 6.0,
-          ),
-          const WordLine(),
-          const WordLine(),
-          devider(),
-          const WordLine(),
-          const WordLine(),
-          const SizedBox(
-            height: 6.0,
-          ),
-        ],
+            const WordLine(),
+            const WordLine(),
+            devider(),
+            const WordLine(),
+            const WordLine(),
+            const SizedBox(
+              height: 6.0,
+            ),
+          ],
+        ),
       ),
     );
   }

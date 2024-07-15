@@ -19,49 +19,50 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double appBarHeight = 130;
     return Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          toolbarHeight: appBarHeight,
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          flexibleSpace: ClipShadowPath(
-            clipper: Customshape(),
-            shadow: AppColors.appBarShadow,
-            child: Container(
-              clipBehavior: Clip.antiAlias,
-              decoration: const BoxDecoration(color: AppColors.black),
-              height: appBarHeight,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Learning words',
-                      style: TextStyle(fontSize: 24, color: Colors.white),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        toolbarHeight: appBarHeight,
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        flexibleSpace: ClipShadowPath(
+          clipper: Customshape(),
+          shadow: AppColors.appBarShadow,
+          child: Container(
+            clipBehavior: Clip.antiAlias,
+            decoration: const BoxDecoration(color: AppColors.black),
+            height: appBarHeight,
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Learning words',
+                    style: TextStyle(fontSize: 24, color: Colors.white),
+                  ),
+                  GestureDetector(
+                    onTap: onMenuTap,
+                    child: SvgPicture.asset(
+                      'assets/icons/menu.svg',
+                      width: 32.0,
+                      height: 32.0,
+                      colorFilter: const ColorFilter.mode(
+                          AppColors.white, BlendMode.srcIn),
                     ),
-                    GestureDetector(
-                      onTap: onMenuTap,
-                      child: SvgPicture.asset(
-                        'assets/icons/menu.svg',
-                        width: 32.0,
-                        height: 32.0,
-                        colorFilter: const ColorFilter.mode(
-                            AppColors.white, BlendMode.srcIn),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
         ),
-        backgroundColor: Colors.white,
-        body: Padding(
-          ///Approximately hieght of drawed appbar part + padding
-          padding:
-              const EdgeInsets.only(top: 98.0 + 30.0, left: 20.0, right: 20.0),
+      ),
+      backgroundColor: Colors.white,
+      body: Padding(
+        ///Approximately hieght of drawed appbar part + padding
+        padding:
+            const EdgeInsets.only(top: 98.0 + 30.0, left: 20.0, right: 20.0),
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -75,7 +76,9 @@ class MainScreen extends StatelessWidget {
               GameWidget(name: 'Mix', onTap: () {}),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   void testSomeFun(BuildContext context) async {

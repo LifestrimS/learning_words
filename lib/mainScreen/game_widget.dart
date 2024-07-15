@@ -16,10 +16,14 @@ class GameWidget extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         margin: const EdgeInsets.only(bottom: 18.0),
         decoration: BoxDecoration(
-            border: Border.all(color: AppColors.black, width: 1.0),
-            borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(16.0),
-                bottomLeft: Radius.circular(16.0))),
+          color: AppColors.white,
+          border: Border.all(color: AppColors.black, width: 1.0),
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(16.0),
+            bottomLeft: Radius.circular(16.0),
+          ),
+          boxShadow: [AppColors.containerShadow],
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
