@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learning_words/home_page.dart';
+import 'package:learning_words/mainScreen/main_screen.dart';
 import 'package:learning_words/utils.dart/di_container.dart';
 
 void main() async {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: const MainScreen(),
     );
   }
 }
