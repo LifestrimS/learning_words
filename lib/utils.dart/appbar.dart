@@ -11,19 +11,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   const CustomAppBar({
     super.key,
-    this.height = 130.0,
+    this.height = 80.0,
     this.showReturnButton = false,
     required this.title,
   });
 
   @override
+  //Appbar prefferedSize + 30
   Size get preferredSize => Size.fromHeight(height);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
-      toolbarHeight: height,
+      toolbarHeight: 250,
       backgroundColor: Colors.transparent,
       elevation: 0.0,
       flexibleSpace: ClipShadowPath(
@@ -32,7 +33,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Container(
           clipBehavior: Clip.antiAlias,
           decoration: const BoxDecoration(color: AppColors.black),
-          height: height,
+          height: 250,
           width: MediaQuery.of(context).size.width,
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -40,10 +41,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 if (showReturnButton)
-                  const Icon(
-                    Icons.arrow_back,
-                    color: AppColors.white,
-                    size: 32.0,
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: AppColors.white,
+                      size: 32.0,
+                    ),
                   ),
                 Text(
                   title,

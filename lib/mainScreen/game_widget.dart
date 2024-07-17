@@ -48,13 +48,10 @@ class GameWidget extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
-                child: RotatedBox(
-                  quarterTurns: 1,
-                  child: SvgPicture.asset(
-                    'assets/icons/triangle.svg',
-                    colorFilter: const ColorFilter.mode(
-                        AppColors.white, BlendMode.srcIn),
-                  ),
+                child: SvgPicture.asset(
+                  'assets/icons/triangle.svg',
+                  colorFilter:
+                      const ColorFilter.mode(AppColors.white, BlendMode.srcIn),
                 ),
               ),
             )

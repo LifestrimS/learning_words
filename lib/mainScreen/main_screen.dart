@@ -23,7 +23,7 @@ class MainScreen extends StatelessWidget {
       body: Padding(
         ///Approximately hieght of drawed appbar part + padding
         padding:
-            const EdgeInsets.only(top: 98.0 + 30.0, left: 20.0, right: 20.0),
+            const EdgeInsets.only(top: 90.0 + 22.0, left: 20.0, right: 20.0),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
