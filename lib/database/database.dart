@@ -33,6 +33,9 @@ class AppDatabase extends _$AppDatabase {
       (delete(wordsTable)..where((t) => t.id.equals(id))).go();
 
   Future deleteAllWords() => (delete(wordsTable)).go();
+
+  Future ifExist(String word) =>
+      managers.wordsTable.filter((f) => f.word(word)).exists();
 }
 
 LazyDatabase _openConnection() {

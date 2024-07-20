@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:learning_words/utils.dart/clip_shadow_path.dart';
 import 'package:learning_words/utils.dart/colors.dart';
 import 'package:learning_words/utils.dart/custom_shape.dart';
@@ -8,12 +7,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
   final String title;
   final bool showReturnButton;
+  final Widget? action;
 
   const CustomAppBar({
     super.key,
     this.height = 80.0,
     this.showReturnButton = false,
     required this.title,
+    this.action,
   });
 
   @override
@@ -53,16 +54,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   title,
                   style: const TextStyle(fontSize: 24, color: Colors.white),
                 ),
-                GestureDetector(
-                  onTap: () {}, //onMenuTap,
-                  child: SvgPicture.asset(
-                    'assets/icons/menu.svg',
-                    width: 32.0,
-                    height: 32.0,
-                    colorFilter: const ColorFilter.mode(
-                        AppColors.white, BlendMode.srcIn),
-                  ),
-                ),
+                if (action != null) ...[
+                  action!,
+                ],
               ],
             ),
           ),
