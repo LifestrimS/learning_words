@@ -1,12 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 class Customshape extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    log('width: ${size.width} \nheight: ${size.height}');
-
     double maxHeight = size.height;
     double height = (maxHeight / 4) * 3;
     double width = size.width;
@@ -29,20 +25,9 @@ class Customshape extends CustomClipper<Path> {
 
     path.quadraticBezierTo(controlP_2.dx, controlP_2.dy, endP_2.dx, endP_2.dy);
 
-    //path.lineTo(endP_2.dx, 90);
-
     path.lineTo(width, 0);
     path.close();
     return path;
-
-    // double height = size.height;
-    // double width = size.width;
-    // var path = Path();
-    // path.lineTo(0, height - 50);
-    // path.quadraticBezierTo(width / 2, height, width, height - 50);
-    // path.lineTo(width, 0);
-    // path.close();
-    // return path;
   }
 
   @override
