@@ -28,6 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: 250,
       backgroundColor: Colors.transparent,
       elevation: 0.0,
+      scrolledUnderElevation: 0.0,
       flexibleSpace: ClipShadowPath(
         clipper: Customshape(),
         shadow: AppColors.appBarShadow,

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:learning_words/models/word.dart';
@@ -11,7 +9,6 @@ class VocabularyRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log('Vocabulary row');
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
       child: Row(

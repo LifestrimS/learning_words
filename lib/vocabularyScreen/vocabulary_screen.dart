@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:learning_words/models/word.dart';
@@ -68,32 +70,12 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
           },
         ),
       ),
-      floatingActionButton: GestureDetector(
-        onTap: () {
-          updateDBByJson(context);
-        },
-        child: Container(
-          decoration: const BoxDecoration(
-            color: AppColors.grey,
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(16.0),
-              bottomLeft: Radius.circular(16.0),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: SvgPicture.asset(
-              'assets/icons/add.svg',
-              height: 32.0,
-              width: 32.0,
-            ),
-          ),
-        ),
-      ),
+      floatingActionButtonLocation: ExpandableFab.location,
+      floatingActionButton: fab(),
     );
   }
 
-  Future<void> updateDBByJson(BuildContext context) async {
+  updateDBByJson(BuildContext context) async {
     log('updateByJson');
     listLoaded.value = false;
     String data =
@@ -136,17 +118,102 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   Widget appBarButtons() {
     return Row(
       children: [
+        //Temporary button
         GestureDetector(
           onTap: _onRefresh,
           child: SvgPicture.asset(
             'assets/icons/edit.svg',
             width: 32.0,
             height: 32.0,
-            colorFilter:
-                const ColorFilter.mode(AppColors.white, BlendMode.srcIn),
+            colorFilter: const ColorFilter.mode(Colors.amber, BlendMode.srcIn),
           ),
         ),
         const PopUpMenu()
+      ],
+    );
+  }
+
+  Widget fab() {
+    return ExpandableFab(
+      //key: _key,
+      type: ExpandableFabType.up,
+      childrenAnimation: ExpandableFabAnimation.none,
+      distance: 70,
+      overlayStyle: ExpandableFabOverlayStyle(
+        color: Colors.white.withOpacity(0.9),
+      ),
+      closeButtonBuilder: FloatingActionButtonBuilder(
+        size: 30.0,
+        builder: (context, onPressed, progress) => Container(
+          padding: const EdgeInsets.all(8.0),
+          decoration: const BoxDecoration(
+            color: AppColors.grey,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(8.0),
+              bottomLeft: Radius.circular(8.0),
+            ),
+          ),
+          child: Transform.rotate(
+            angle: -math.pi / 4,
+            child: SvgPicture.asset(
+              'assets/icons/add.svg',
+              height: 20.0,
+              width: 20.0,
+            ),
+          ),
+        ),
+      ),
+      openButtonBuilder: FloatingActionButtonBuilder(
+        size: 60.0,
+        builder: (context, onPressed, progress) => Container(
+          padding: const EdgeInsets.all(14.0),
+          decoration: const BoxDecoration(
+            color: AppColors.grey,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(16.0),
+              bottomLeft: Radius.circular(16.0),
+            ),
+          ),
+          child: SvgPicture.asset(
+            'assets/icons/add.svg',
+            height: 32.0,
+            width: 32.0,
+          ),
+        ),
+      ),
+      children: [
+        Row(
+          children: [
+            const Text('by hand'),
+            const SizedBox(width: 20),
+            FloatingActionButton.small(
+              heroTag: null,
+              onPressed: () {
+                updateDBByJson(context);
+              },
+              child: SvgPicture.asset(
+                'assets/icons/add.svg',
+                height: 18.0,
+                width: 18.0,
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            const Text('by JSON'),
+            const SizedBox(width: 20),
+            FloatingActionButton.small(
+              heroTag: null,
+              onPressed: null,
+              child: SvgPicture.asset(
+                'assets/icons/add.svg',
+                height: 18.0,
+                width: 18.0,
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
