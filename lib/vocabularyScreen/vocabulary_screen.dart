@@ -191,6 +191,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
               onPressed: () {
                 updateDBByJson(context);
               },
+              backgroundColor: AppColors.grey,
               child: SvgPicture.asset(
                 'assets/icons/add.svg',
                 height: 18.0,
@@ -206,6 +207,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
             FloatingActionButton.small(
               heroTag: null,
               onPressed: null,
+              backgroundColor: AppColors.grey,
               child: SvgPicture.asset(
                 'assets/icons/add.svg',
                 height: 18.0,
