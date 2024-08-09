@@ -40,35 +40,32 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
       ),
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: ValueListenableBuilder(
-          valueListenable: listLoaded,
-          builder: (context, value, child) {
-            if (value) {
-              if (wordList.isNotEmpty) {
-                return ListView.builder(
-                  itemCount: wordList.length,
-                  itemBuilder: (context, index) {
-                    return VocabularyRow(word: wordList[index]);
-                  },
-                );
-              }
-              return const Padding(
-                padding: EdgeInsets.only(top: 80.0),
-                child: Center(
-                  child: Text('Empty :('),
-                ),
-              );
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.black,
-                ),
+      body: ValueListenableBuilder(
+        valueListenable: listLoaded,
+        builder: (context, value, child) {
+          if (value) {
+            if (wordList.isNotEmpty) {
+              return ListView.builder(
+                itemCount: wordList.length,
+                itemBuilder: (context, index) {
+                  return VocabularyRow(word: wordList[index]);
+                },
               );
             }
-          },
-        ),
+            return const Padding(
+              padding: EdgeInsets.only(top: 80.0),
+              child: Center(
+                child: Text('Empty :('),
+              ),
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: AppColors.black,
+              ),
+            );
+          }
+        },
       ),
       floatingActionButtonLocation: ExpandableFab.location,
       floatingActionButton: fab(),
