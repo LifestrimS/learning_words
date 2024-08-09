@@ -48,7 +48,10 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
               return ListView.builder(
                 itemCount: wordList.length,
                 itemBuilder: (context, index) {
-                  return VocabularyRow(word: wordList[index]);
+                  return VocabularyRow(
+                    word: wordList[index],
+                    updateList: () => _onRefresh(),
+                  );
                 },
               );
             }
@@ -93,18 +96,22 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
 
   Future<void> _loadData() async {
     log('loadData');
-    listLoaded.value = false;
-    await Future.delayed(const Duration(seconds: 1));
+    try {
+      listLoaded.value = false;
+      await Future.delayed(const Duration(milliseconds: 300));
 
-    wordList.clear();
+      wordList.clear();
 
-    final repo = GetIt.I.get<Repository>();
+      final repo = GetIt.I.get<Repository>();
 
-    final tmpList = await repo.getAllWords();
+      final tmpList = await repo.getAllWords();
 
-    wordList.addAll(tmpList);
+      wordList.addAll(tmpList);
 
-    listLoaded.value = true;
+      listLoaded.value = true;
+    } catch (e) {
+      log('WRONG _loadData: $e');
+    }
   }
 
   void _onRefresh() async {
@@ -112,20 +119,33 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     await _loadData();
   }
 
+  void _deleteAllWords() async {
+    log('_deleteAllWords');
+    try {
+      await GetIt.I.get<Repository>().deleteAllWords();
+      _onRefresh();
+    } catch (e) {
+      log('WRONG delete all words: $e');
+    }
+  }
+
   Widget appBarButtons() {
     return Row(
       children: [
         //Temporary button
-        GestureDetector(
-          onTap: _onRefresh,
-          child: SvgPicture.asset(
-            'assets/icons/edit.svg',
-            width: 32.0,
-            height: 32.0,
-            colorFilter: const ColorFilter.mode(Colors.amber, BlendMode.srcIn),
-          ),
-        ),
-        const PopUpMenu()
+        // GestureDetector(
+        //   onTap: _onRefresh,
+        //   child: SvgPicture.asset(
+        //     'assets/icons/edit.svg',
+        //     width: 32.0,
+        //     height: 32.0,
+        //     colorFilter: const ColorFilter.mode(Colors.amber, BlendMode.srcIn),
+        //   ),
+        // ),
+        PopUpMenu(
+          onUpdate: () => _onRefresh(),
+          onDelete: () => _deleteAllWords(),
+        )
       ],
     );
   }
@@ -185,9 +205,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
             const SizedBox(width: 20),
             FloatingActionButton.small(
               heroTag: null,
-              onPressed: () {
-                updateDBByJson(context);
-              },
+              onPressed: null,
               backgroundColor: AppColors.grey,
               child: SvgPicture.asset(
                 'assets/icons/add.svg',
@@ -203,7 +221,9 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
             const SizedBox(width: 20),
             FloatingActionButton.small(
               heroTag: null,
-              onPressed: null,
+              onPressed: () {
+                updateDBByJson(context);
+              },
               backgroundColor: AppColors.grey,
               child: SvgPicture.asset(
                 'assets/icons/add.svg',

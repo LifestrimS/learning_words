@@ -30,4 +30,14 @@ class Word {
   String toString() {
     return '\nid: $id : $word : $transcription : $translation : $examples';
   }
+
+  @override
+  bool operator ==(Object other) {
+    return (other is Word) &&
+        other.word == word &&
+        other.transcription == transcription;
+  }
+
+  @override
+  int get hashCode => Object.hash(word, transcription);
 }

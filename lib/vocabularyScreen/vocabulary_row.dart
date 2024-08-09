@@ -1,12 +1,18 @@
+import 'dart:developer';
+
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:learning_words/models/word.dart';
+import 'package:learning_words/repository/repository.dart';
 import 'package:learning_words/utils.dart/colors.dart';
 
 class VocabularyRow extends StatelessWidget {
   final Word word;
-  const VocabularyRow({required this.word, super.key});
+  final Function() updateList;
+  const VocabularyRow(
+      {super.key, required this.word, required this.updateList});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +28,10 @@ class VocabularyRow extends StatelessWidget {
               ),
             ),
             expanded: Column(children: [
-              RowExpanded(word: word),
+              RowExpanded(
+                word: word,
+                updateList: () => updateList(),
+              ),
             ]),
           ),
         ],
@@ -95,7 +104,8 @@ class RowTitle extends StatelessWidget {
 
 class RowExpanded extends StatelessWidget {
   final Word word;
-  const RowExpanded({super.key, required this.word});
+  final Function() updateList;
+  const RowExpanded({super.key, required this.word, required this.updateList});
 
   @override
   Widget build(BuildContext context) {
@@ -132,12 +142,15 @@ class RowExpanded extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SvgPicture.asset(
-                    'assets/icons/trash.svg',
-                    width: 20.0,
-                    height: 20.0,
-                    colorFilter: const ColorFilter.mode(
-                        AppColors.black, BlendMode.srcIn),
+                  GestureDetector(
+                    onTap: () => _deleteWord(word.id),
+                    child: SvgPicture.asset(
+                      'assets/icons/trash.svg',
+                      width: 20.0,
+                      height: 20.0,
+                      colorFilter: const ColorFilter.mode(
+                          AppColors.black, BlendMode.srcIn),
+                    ),
                   ),
                   SvgPicture.asset(
                     'assets/icons/edit.svg',
@@ -153,5 +166,14 @@ class RowExpanded extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _deleteWord(int id) async {
+    try {
+      await GetIt.I.get<Repository>().deleteWordbyId(id);
+      updateList();
+    } catch (e) {
+      log('WRONG delete word $id : $e');
+    }
   }
 }
