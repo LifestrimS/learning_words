@@ -36,4 +36,8 @@ class Repository {
   Future<void> deleteAllWords() async {
     return await _db.deleteAllWords();
   }
+
+  Future<bool> ifExist(String word) async {
+    return await _db.ifExist(word);
+  }
 }

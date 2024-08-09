@@ -6,7 +6,7 @@ class Customshape extends CustomClipper<Path> {
     double maxHeight = size.height;
     double height = (maxHeight / 4) * 3;
     double width = size.width;
-    int widthSlice = 15;
+    int widthSlice = 20;
     int heightSlice = 3;
     int widthSliceOffset = 1;
 
