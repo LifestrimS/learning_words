@@ -35,8 +35,15 @@ class $WordsTableTable extends WordsTable
   late final GeneratedColumn<String> translation = GeneratedColumn<String>(
       'translation', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _examplesMeta =
+      const VerificationMeta('examples');
   @override
-  List<GeneratedColumn> get $columns => [id, word, transcription, translation];
+  late final GeneratedColumn<String> examples = GeneratedColumn<String>(
+      'examples', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, word, transcription, translation, examples];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -72,6 +79,12 @@ class $WordsTableTable extends WordsTable
     } else if (isInserting) {
       context.missing(_translationMeta);
     }
+    if (data.containsKey('examples')) {
+      context.handle(_examplesMeta,
+          examples.isAcceptableOrUnknown(data['examples']!, _examplesMeta));
+    } else if (isInserting) {
+      context.missing(_examplesMeta);
+    }
     return context;
   }
 
@@ -89,6 +102,8 @@ class $WordsTableTable extends WordsTable
           .read(DriftSqlType.string, data['${effectivePrefix}transcription'])!,
       translation: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}translation'])!,
+      examples: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}examples'])!,
     );
   }
 
@@ -103,11 +118,13 @@ class WordsTableData extends DataClass implements Insertable<WordsTableData> {
   final String word;
   final String transcription;
   final String translation;
+  final String examples;
   const WordsTableData(
       {required this.id,
       required this.word,
       required this.transcription,
-      required this.translation});
+      required this.translation,
+      required this.examples});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -115,6 +132,7 @@ class WordsTableData extends DataClass implements Insertable<WordsTableData> {
     map['word'] = Variable<String>(word);
     map['transcription'] = Variable<String>(transcription);
     map['translation'] = Variable<String>(translation);
+    map['examples'] = Variable<String>(examples);
     return map;
   }
 
@@ -124,6 +142,7 @@ class WordsTableData extends DataClass implements Insertable<WordsTableData> {
       word: Value(word),
       transcription: Value(transcription),
       translation: Value(translation),
+      examples: Value(examples),
     );
   }
 
@@ -135,6 +154,7 @@ class WordsTableData extends DataClass implements Insertable<WordsTableData> {
       word: serializer.fromJson<String>(json['word']),
       transcription: serializer.fromJson<String>(json['transcription']),
       translation: serializer.fromJson<String>(json['translation']),
+      examples: serializer.fromJson<String>(json['examples']),
     );
   }
   @override
@@ -145,6 +165,7 @@ class WordsTableData extends DataClass implements Insertable<WordsTableData> {
       'word': serializer.toJson<String>(word),
       'transcription': serializer.toJson<String>(transcription),
       'translation': serializer.toJson<String>(translation),
+      'examples': serializer.toJson<String>(examples),
     };
   }
 
@@ -152,12 +173,14 @@ class WordsTableData extends DataClass implements Insertable<WordsTableData> {
           {int? id,
           String? word,
           String? transcription,
-          String? translation}) =>
+          String? translation,
+          String? examples}) =>
       WordsTableData(
         id: id ?? this.id,
         word: word ?? this.word,
         transcription: transcription ?? this.transcription,
         translation: translation ?? this.translation,
+        examples: examples ?? this.examples,
       );
   @override
   String toString() {
@@ -165,13 +188,15 @@ class WordsTableData extends DataClass implements Insertable<WordsTableData> {
           ..write('id: $id, ')
           ..write('word: $word, ')
           ..write('transcription: $transcription, ')
-          ..write('translation: $translation')
+          ..write('translation: $translation, ')
+          ..write('examples: $examples')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, word, transcription, translation);
+  int get hashCode =>
+      Object.hash(id, word, transcription, translation, examples);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -179,7 +204,8 @@ class WordsTableData extends DataClass implements Insertable<WordsTableData> {
           other.id == this.id &&
           other.word == this.word &&
           other.transcription == this.transcription &&
-          other.translation == this.translation);
+          other.translation == this.translation &&
+          other.examples == this.examples);
 }
 
 class WordsTableCompanion extends UpdateCompanion<WordsTableData> {
@@ -187,31 +213,37 @@ class WordsTableCompanion extends UpdateCompanion<WordsTableData> {
   final Value<String> word;
   final Value<String> transcription;
   final Value<String> translation;
+  final Value<String> examples;
   const WordsTableCompanion({
     this.id = const Value.absent(),
     this.word = const Value.absent(),
     this.transcription = const Value.absent(),
     this.translation = const Value.absent(),
+    this.examples = const Value.absent(),
   });
   WordsTableCompanion.insert({
     this.id = const Value.absent(),
     required String word,
     required String transcription,
     required String translation,
+    required String examples,
   })  : word = Value(word),
         transcription = Value(transcription),
-        translation = Value(translation);
+        translation = Value(translation),
+        examples = Value(examples);
   static Insertable<WordsTableData> custom({
     Expression<int>? id,
     Expression<String>? word,
     Expression<String>? transcription,
     Expression<String>? translation,
+    Expression<String>? examples,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (word != null) 'word': word,
       if (transcription != null) 'transcription': transcription,
       if (translation != null) 'translation': translation,
+      if (examples != null) 'examples': examples,
     });
   }
 
@@ -219,12 +251,14 @@ class WordsTableCompanion extends UpdateCompanion<WordsTableData> {
       {Value<int>? id,
       Value<String>? word,
       Value<String>? transcription,
-      Value<String>? translation}) {
+      Value<String>? translation,
+      Value<String>? examples}) {
     return WordsTableCompanion(
       id: id ?? this.id,
       word: word ?? this.word,
       transcription: transcription ?? this.transcription,
       translation: translation ?? this.translation,
+      examples: examples ?? this.examples,
     );
   }
 
@@ -243,6 +277,9 @@ class WordsTableCompanion extends UpdateCompanion<WordsTableData> {
     if (translation.present) {
       map['translation'] = Variable<String>(translation.value);
     }
+    if (examples.present) {
+      map['examples'] = Variable<String>(examples.value);
+    }
     return map;
   }
 
@@ -252,7 +289,8 @@ class WordsTableCompanion extends UpdateCompanion<WordsTableData> {
           ..write('id: $id, ')
           ..write('word: $word, ')
           ..write('transcription: $transcription, ')
-          ..write('translation: $translation')
+          ..write('translation: $translation, ')
+          ..write('examples: $examples')
           ..write(')'))
         .toString();
   }
@@ -274,12 +312,14 @@ typedef $$WordsTableTableInsertCompanionBuilder = WordsTableCompanion Function({
   required String word,
   required String transcription,
   required String translation,
+  required String examples,
 });
 typedef $$WordsTableTableUpdateCompanionBuilder = WordsTableCompanion Function({
   Value<int> id,
   Value<String> word,
   Value<String> transcription,
   Value<String> translation,
+  Value<String> examples,
 });
 
 class $$WordsTableTableTableManager extends RootTableManager<
@@ -306,24 +346,28 @@ class $$WordsTableTableTableManager extends RootTableManager<
             Value<String> word = const Value.absent(),
             Value<String> transcription = const Value.absent(),
             Value<String> translation = const Value.absent(),
+            Value<String> examples = const Value.absent(),
           }) =>
               WordsTableCompanion(
             id: id,
             word: word,
             transcription: transcription,
             translation: translation,
+            examples: examples,
           ),
           getInsertCompanionBuilder: ({
             Value<int> id = const Value.absent(),
             required String word,
             required String transcription,
             required String translation,
+            required String examples,
           }) =>
               WordsTableCompanion.insert(
             id: id,
             word: word,
             transcription: transcription,
             translation: translation,
+            examples: examples,
           ),
         ));
 }
@@ -362,6 +406,11 @@ class $$WordsTableTableFilterComposer
       column: $state.table.translation,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get examples => $state.composableBuilder(
+      column: $state.table.examples,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
 }
 
 class $$WordsTableTableOrderingComposer
@@ -384,6 +433,11 @@ class $$WordsTableTableOrderingComposer
 
   ColumnOrderings<String> get translation => $state.composableBuilder(
       column: $state.table.translation,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get examples => $state.composableBuilder(
+      column: $state.table.examples,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }

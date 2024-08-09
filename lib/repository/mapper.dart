@@ -8,7 +8,8 @@ class Mapper {
         id: element.id,
         word: element.word,
         transcription: element.transcription,
-        translation: element.translation);
+        translation: element.translation,
+        examples: element.examples);
   }
 
   WordsTableData toWordsTableData(Word word) {
@@ -16,13 +17,15 @@ class Mapper {
         id: word.id,
         word: word.word,
         transcription: word.transcription,
-        translation: word.translation);
+        translation: word.translation,
+        examples: word.examples);
   }
 
   WordsTableCompanion toWordsTableCompanion(Word word) {
     return WordsTableCompanion(
         word: Value(word.word),
         transcription: Value(word.transcription),
-        translation: Value(word.translation));
+        translation: Value(word.translation),
+        examples: Value(word.examples));
   }
 }
