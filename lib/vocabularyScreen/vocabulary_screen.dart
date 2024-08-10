@@ -10,6 +10,7 @@ import 'package:learning_words/models/word.dart';
 import 'package:learning_words/repository/repository.dart';
 import 'package:learning_words/utils.dart/appbar.dart';
 import 'package:learning_words/utils.dart/colors.dart';
+import 'package:learning_words/vocabularyScreen/add_word_dilog.dart';
 import 'package:learning_words/vocabularyScreen/menu_button.dart';
 import 'package:learning_words/vocabularyScreen/vocabulary_row.dart';
 
@@ -23,6 +24,7 @@ class VocabularyScreen extends StatefulWidget {
 class _VocabularyScreenState extends State<VocabularyScreen> {
   List<Word> wordList = [];
   ValueNotifier listLoaded = ValueNotifier<bool>(false);
+  final _key = GlobalKey<ExpandableFabState>();
 
   @override
   void initState() {
@@ -152,7 +154,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
 
   Widget fab() {
     return ExpandableFab(
-      //key: _key,
+      key: _key,
       type: ExpandableFabType.up,
       childrenAnimation: ExpandableFabAnimation.none,
       distance: 70,
@@ -205,7 +207,12 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
             const SizedBox(width: 20),
             FloatingActionButton.small(
               heroTag: null,
-              onPressed: null,
+              onPressed: () {
+                AddWordDilog(
+                  onConfirm: (value) => value ? _onRefresh() : null,
+                ).addWordDialog(context);
+                toggleFabState(_key);
+              },
               backgroundColor: AppColors.grey,
               child: SvgPicture.asset(
                 'assets/icons/add.svg',
@@ -223,6 +230,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
               heroTag: null,
               onPressed: () {
                 updateDBByJson(context);
+                toggleFabState(_key);
               },
               backgroundColor: AppColors.grey,
               child: SvgPicture.asset(
@@ -235,5 +243,12 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
         ),
       ],
     );
+  }
+
+  void toggleFabState(GlobalKey<ExpandableFabState> key) {
+    final state = key.currentState;
+    if (state != null) {
+      state.toggle();
+    }
   }
 }
