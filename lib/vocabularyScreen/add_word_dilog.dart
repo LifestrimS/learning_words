@@ -1,4 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:learning_words/models/word.dart';
+import 'package:learning_words/repository/repository.dart';
 import 'package:learning_words/utils.dart/colors.dart';
 
 class AddWordDilog {
@@ -52,8 +57,12 @@ class AddWordDilog {
                     height: 200.0),
                 GestureDetector(
                   onTap: () {
-                    onConfirm(true);
-                    Navigator.pop(context);
+                    onSave().then((value) {
+                      if (value) {
+                        onConfirm(true);
+                        Navigator.pop(context);
+                      }
+                    });
                   },
                   child: Container(
                     width: double.infinity,
@@ -84,6 +93,9 @@ class AddWordDilog {
     );
   }
 
+  //TODO: notCentered text
+  //TODO: keboard overflow container
+
   Widget textField(
       {required TextEditingController controller,
       required String hintText,
@@ -104,13 +116,28 @@ class AddWordDilog {
         textAlignVertical: TextAlignVertical.top,
         style: const TextStyle(color: AppColors.black, fontSize: 20.0),
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.zero,
-            hintText: hintText,
-            border: InputBorder.none,
-            hintStyle: const TextStyle(color: AppColors.black),
-            fillColor: Colors.amber,
-            filled: true),
+          contentPadding: EdgeInsets.zero,
+          hintText: hintText,
+          border: InputBorder.none,
+          hintStyle: const TextStyle(color: AppColors.black),
+        ),
       ),
     );
+  }
+
+  Future<bool> onSave() async {
+    try {
+      Word word = Word(
+          id: 0,
+          word: _textFieldWordController.text,
+          transcription: _textFieldTranscriptionController.text,
+          translation: _textFieldTranslationController.text,
+          examples: _textFieldExampleController.text);
+      await GetIt.I.get<Repository>().addWord(word);
+      return true;
+    } catch (e) {
+      log('Wrong adding word: $e');
+      return false;
+    }
   }
 }

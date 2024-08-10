@@ -25,7 +25,6 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   List<Word> wordList = [];
   ValueNotifier listLoaded = ValueNotifier<bool>(false);
   final _key = GlobalKey<ExpandableFabState>();
-  final TextEditingController _textFieldController = TextEditingController();
 
   @override
   void initState() {
@@ -212,7 +211,6 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                 AddWordDilog(
                   onConfirm: (value) => value ? _onRefresh() : null,
                 ).addWordDialog(context);
-                //addWordDialog(context);
                 toggleFabState(_key);
               },
               backgroundColor: AppColors.grey,
@@ -252,45 +250,5 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     if (state != null) {
       state.toggle();
     }
-  }
-
-  Future<void> addWordDialog(BuildContext context) {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-          child: Container(
-            padding: const EdgeInsets.all(20.0),
-            decoration: const BoxDecoration(
-              color: AppColors.black,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(16.0),
-                bottomLeft: Radius.circular(16.0),
-              ),
-            ),
-            child: const Text('Test Diolog'),
-          ),
-          // title: Text('What is your Lucky Number'),
-          // content: TextField(
-          //   controller: _textFieldController,
-          //   textInputAction: TextInputAction.go,
-          //   keyboardType: TextInputType.numberWithOptions(),
-          //   decoration: InputDecoration(hintText: "Enter your number"),
-          // ),
-          // shape: Shape.,
-          // actions: <Widget>[
-          //   GestureDetector(
-          //     onTap: () {
-          //       Navigator.of(context).pop();
-          //     },
-          //     child: Container(
-          //       color: AppColors.grey,
-          //       child: Text('Submit'),
-          //     ),
-          //   )
-          // ],
-        );
-      },
-    );
   }
 }
